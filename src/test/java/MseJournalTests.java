@@ -1,3 +1,6 @@
+import com.codeborne.selenide.Browser;
+import com.codeborne.selenide.Browsers;
+import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import io.qameta.allure.Feature;
@@ -5,6 +8,7 @@ import io.qameta.allure.Owner;
 import org.openqa.selenium.By;
 import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +44,7 @@ class MseJournalTests extends TestBase {
         });
 
         step("Переход на дашборд.", () -> {
+
             //----В течении 10 секунд ждем выплывающие сообщения и закрываем их-------------------------------------
             long start = System.currentTimeMillis(),
                  end = start + 10*1000;
@@ -57,21 +62,27 @@ class MseJournalTests extends TestBase {
         });
 
         step("Переход в журнал направлений на МСЭ.", () -> {
+
             mseButton.scrollIntoView(("{behavior: \"instant\", block: \"center\", inline: \"center\"}"));
             mseButton.click();
 
             switchTo().window(1);
             body.shouldHave(text("Журнал направлений на медико-социальную экспертизу (МСЭ)"));
             journalMseTitle.shouldBe(visible);
+
+            String currentUrl = WebDriverRunner.url();
+            System.out.println(currentUrl);
         });
+
+    }
 
     @Test
     @Tag("web")
-    @DisplayName("Переход в журнал направлений на МСЭ.")
+    @DisplayName("Тесты поиска в журнале МСЭ.")
     void journalMseTests() {
 
         step("Переход в журнал направлений на МСЭ.", () -> {
-
+            open("");
         });
 
     }
