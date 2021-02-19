@@ -76,20 +76,21 @@ class MseJournalTests extends TestBase {
             fioControl.setValue("470101-202005");
             findButton.click();
 
-            String numberControl = fioControl.getText();
+/*          В DOM нет значения поля, проверка невозможна
+            String numberControl = fioControl2.getText();
             System.out.println(numberControl);
-            assertTrue(numberControl.contains("470101"));
+            assertTrue(numberControl.contains("470101-202005"));
             assertTrue(numberControl.contains("202005"));
+*/
+            String countRecValue = countRec.getText();
+            System.out.println(countRecValue);
+            assertTrue(countRecValue.contains("1"));
 
-            String countRec = $(".count-rec").getText();
-            System.out.println(countRec);
-            assertTrue(countRec.contains("1"));
-
-            String personName =$(By.xpath("//td[@role='gridcell'])[3]")).getText();
-            System.out.println(personName);
-            assertTrue(personName.contains("Жмышенко"));
-            assertTrue(personName.contains("Валерий"));
-            assertTrue(personName.contains("Альбертович"));
+            String personNameText = gridFio.getText();
+            System.out.println(personNameText);
+            assertTrue(personNameText.contains("Жмышенко"));
+            assertTrue(personNameText.contains("Валерий"));
+            assertTrue(personNameText.contains("Альбертович"));
 
         });
 

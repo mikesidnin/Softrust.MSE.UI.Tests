@@ -33,6 +33,9 @@ public class TestBase {
     SelenideElement snackbar = $(By.xpath(".//simple-snack-bar[@class='mat-simple-snackbar ng-star-inserted']/span")),
                     journalMseTitle = $(By.xpath("//div[text()=' Журнал направлений на медико-социальную экспертизу (МСЭ) ']")),
                     fioControl = $(byAttribute("formcontrolname","fio")),
+                    fioControl2 = $(By.xpath("//input[contains(@class,'mat-input-element mat-form-field-autofill-control')]")),
+                    countRec = $(".count-rec"),
+                    gridFio = $(By.xpath("//td[contains(@class,'mat-cell cdk-column-fio')]")),
                     findButton = $(By.xpath("//span[text()='Найти']"));
 
     //----Служебные--------------------------------------------------------------------------------------------------
