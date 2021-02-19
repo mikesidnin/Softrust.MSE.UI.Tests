@@ -146,14 +146,14 @@ class MseJournalTests extends TestBase {
 
         step("Поиск по дате подачи с.", () -> {
 
-            dateControl.setValue("01.02.2021");
+            dateBeginControl.setValue("01.02.2021");
             findButton.click();
             gridSortByDateButton.click();
 
             sleep(1000); // Ждем пока отрисуется грида чтобы забрать нужное значение
 
             String valueDateGrid = gridDateCell.getText();
-            String valueDateControl = dateControl.getValue();
+            String valueDateControl = dateBeginControl.getValue();
 
             Date dateControl = new SimpleDateFormat("dd.MM.yyyy").parse(valueDateControl);
             Date dateGrid = new SimpleDateFormat("dd.MM.yyyy").parse(valueDateGrid);
@@ -162,8 +162,42 @@ class MseJournalTests extends TestBase {
             System.out.println(dateGrid.getTime());
 
             assertTrue(dateControl.getTime() <= dateGrid.getTime());
+        });
+
+        step("Очистка поля фильтрации Дата с.", () -> {
+
+            String valueOld = dateBeginControl.getValue();
+            System.out.println(valueOld);
+
+            eraiseButton.click();
+
+            String valueNew = dateBeginControl.getValue();
+            System.out.println(valueNew);
+
+            assertNotSame(valueNew, valueOld);
 
         });
+
+        step("Поиск по дате подачи по.", () -> {
+
+            dateEndControl.setValue("19.02.2021");
+            findButton.click();
+            gridSortByDateButton.click();
+
+            sleep(1000); // Ждем пока отрисуется грида чтобы забрать нужное значение
+
+            String valueDateGrid = gridDateCell.getText();
+            String valueDateControl = dateEndControl.getValue();
+
+            Date dateControl = new SimpleDateFormat("dd.MM.yyyy").parse(valueDateControl);
+            Date dateGrid = new SimpleDateFormat("dd.MM.yyyy").parse(valueDateGrid);
+
+            System.out.println(dateControl.getTime());
+            System.out.println(dateGrid.getTime());
+
+            assertTrue(dateControl.getTime() <= dateGrid.getTime());
+        });
+
 
 
 
