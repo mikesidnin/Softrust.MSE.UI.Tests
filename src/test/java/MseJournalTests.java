@@ -1,22 +1,15 @@
-import com.codeborne.selenide.Browser;
-import com.codeborne.selenide.Browsers;
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
-import org.openqa.selenium.By;
 import org.junit.jupiter.api.Tag;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Selectors.byAttribute;
 import static helpers.Environment.*;
 import static io.qameta.allure.Allure.step;
-import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -69,20 +62,35 @@ class MseJournalTests extends TestBase {
             switchTo().window(1);
             body.shouldHave(text("Журнал направлений на медико-социальную экспертизу (МСЭ)"));
             journalMseTitle.shouldBe(visible);
-
-            String currentUrl = WebDriverRunner.url();
-            System.out.println(currentUrl);
         });
-
     }
 
     @Test
     @Tag("web")
-    @DisplayName("Тесты поиска в журнале МСЭ.")
+    @DisplayName("Тесты полей фильтрации в журнале МСЭ.")
     void journalMseTests() {
 
-        step("Переход в журнал направлений на МСЭ.", () -> {
-            open("");
+        step("Поиск по номеру направления.", () -> {
+            openURLMseJournal(docPrvdId);
+
+            fioControl.setValue("470101-202005");
+            findButton.click();
+
+            String numberControl = fioControl.getText();
+            System.out.println(numberControl);
+            assertTrue(numberControl.contains("470101"));
+            assertTrue(numberControl.contains("202005"));
+
+            String countRec = $(".count-rec").getText();
+            System.out.println(countRec);
+            assertTrue(countRec.contains("1"));
+
+            String personName =$(By.xpath("//td[@role='gridcell'])[3]")).getText();
+            System.out.println(personName);
+            assertTrue(personName.contains("Жмышенко"));
+            assertTrue(personName.contains("Валерий"));
+            assertTrue(personName.contains("Альбертович"));
+
         });
 
     }

@@ -1,33 +1,24 @@
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.Issue;
 import io.qameta.allure.Step;
-import io.qameta.allure.restassured.AllureRestAssured;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.ArrayList;
 
 import static com.codeborne.selenide.Selectors.byAttribute;
-import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
-import static com.codeborne.selenide.WebDriverRunner.closeWebDriver;
 import static helpers.AttachmentsHelper.*;
 import static helpers.DriverHelper.*;
 import static helpers.Environment.*;
-import static helpers.LoadCredentials.getCredentialsFromJson;
-import static io.qameta.allure.Allure.parameter;
 
 
 public class TestBase {
-//----Локаторы-------------------------------------------------------------------------------------------------------
+
+     //----Локаторы---------------------------------------------------------------------------------------------------
     //----Зеленый МИС------------------------------------------------------------------------------------------------
     SelenideElement loginControl = $("#Login"),
                     welcomeTitle = $(".main-title"),
@@ -40,13 +31,36 @@ public class TestBase {
 
     //----Журнал МСЭ-------------------------------------------------------------------------------------------------
     SelenideElement snackbar = $(By.xpath(".//simple-snack-bar[@class='mat-simple-snackbar ng-star-inserted']/span")),
-                    journalMseTitle = $(By.xpath("//div[text()=' Журнал направлений на медико-социальную экспертизу (МСЭ) ']"));
+                    journalMseTitle = $(By.xpath("//div[text()=' Журнал направлений на медико-социальную экспертизу (МСЭ) ']")),
+                    fioControl = $(byAttribute("formcontrolname","fio")),
+                    findButton = $(By.xpath("//span[text()='Найти']"));
 
     //----Служебные--------------------------------------------------------------------------------------------------
     SelenideElement body = $("body");
-
-
 //-------------------------------------------------------------------------------------------------------------------
+
+    //----Собираем УРЛ журнала МСЭ-----------------------------------------------------------------------------------
+    public void openURLMseJournal(String docPrvdId) {
+
+        String ipAddress = "http://109.95.224.42:2165/",
+                relativePath = "test2/mse/log",
+                ticket = "ticket=D9VQnls2TN%2B2s%2FwzBNicUCtcrH1JNeDL6%2BRSxXP6jeJ%2FhYi6e%2FnGu13NyHHvOVBmmP%2BETKS%2FoKu%2FQraiIvDFoVWFUFZEhXMbiAauqiPVXFVP6vTnUOFTt49dWUKrLJu9qQ9jKZrXXXi%2Fv6VkaxQMVqcjfkV2ctNH5UXIdnUymK2FwDrwrUpwEtwKG9yrqvOnTwFM7NNxX%2BzH3lZd1sKNgRRnk1M4GqLT3uJFQ0Tkif%2BxaflrVRtMqRMen58nmCVjM%2FL0b4dFxdL7Yvlbyb5OvlP2qnf%2F5yfz9%2BfhQXSjiK5NMlmnYlwlEiae%2BhdLY2jxvxjjknDJwxIXxmrRvbt7jq1thpE%3D",
+                docPrvdIdPart = "DocPrvdId=" + docPrvdId,
+                misUrl = "MisUrl=http:%2F%2F192.168.7.54%2Fmis%2Ftest2",
+                returnUrl = "ReturnUrl=http:%2F%2F192.168.7.54%2Fmis%2Ftest2%2FMain%2FDefault";
+
+        open(ipAddress + relativePath + "?" + ticket+ "&" + docPrvdIdPart + "&" + misUrl + "&" + returnUrl);
+    }
+    //----Собираем УРЛ зеленого МИСа---------------------------------------------------------------------------------
+    public void openURLWebMis() {
+
+        String ipAddress = "http://192.168.7.54/",
+                relativePath = "mis/test2/";
+
+        open(ipAddress + relativePath);
+    }
+//-------------------------------------------------------------------------------------------------------------------
+
     @BeforeAll
     @Step("Tests setup")
     public static void setUp() {
@@ -65,7 +79,7 @@ public class TestBase {
         }
         //----Если настройка Jenkins пустая, то берем дефолтные значения + дебаг и тестирование-------------------------
         if (user == null || password == null) {
-            user = "sidnin_doc";
+            user = "sidnin_doc"; //admin
             password = "11";
         }
     }
@@ -80,28 +94,4 @@ public class TestBase {
         closeWebDriver();
         if (isVideoOn) attachVideo(sessionId);
     }
-
-    //----Собираем УРЛ белого случая лечения---------------------------------------------------------------------
-    public void openURLWithMkabTap(String mkabID, String tapID, String docPrvdId) {
-
-        String ipAddress = "http://109.95.224.42:2165/", //"http://109.95.224.42:2165/",
-                relativePath = "test2/tap/card",
-                ticket = "ticket=IhNpmO2lhSwbyJ1orHAD7qLggeE9S95511DXiMdsj3w5k220ljbVUxm0dip%2Bqupr7EaWXDIx%2BAIMTpb9cbtswnOPFJaPhIflTvaM2%2FYsk5CXrCvG6DgJpRgn4geoCNscGgSXZmR8J%2FcnGhMmxb3Z05OafJ51%2B2vDddXbjucEe9XjEw0PkUPz7pru5I7gM7vMz6lIbjDiV4g3fZiYD8EvODcDDANWXziHQjTrPhyhR0x64QC7d4iitOPGni%2Bg38kAvW6BGahH%2BVi9r6NUidg8rTxB36taAgHVFT01eAkjf%2BMbSFNOl%2BKT0CucPKjw%2BD6mJgbunKwaDvQiEXclRDrcMrkw9jc%3D",
-                mkabIdPart = "MkabId=" + mkabID,
-                tapIdPart = "TapId=" + tapID,
-                docPrvdIdPart = "DocPrvdId=" + docPrvdId,
-                misUrl = "MisUrl=http:%2F%2F192.168.7.54%2Fmis%2Ftest2",
-                returnUrl = "ReturnUrl=http:%2F%2F192.168.7.54%2Fmis%2Ftest2%2FSchedule";
-
-        open(ipAddress + relativePath + "?" + ticket+ "&" + mkabIdPart + "&" + tapIdPart + "&" + docPrvdIdPart + "&" + misUrl + "&" + returnUrl);
-    }
-
-    public void openURLWebMis() {
-
-        String ipAddress = "http://192.168.7.54/",
-               relativePath = "mis/test2/";
-
-        open(ipAddress + relativePath);
-    }
-
 }
