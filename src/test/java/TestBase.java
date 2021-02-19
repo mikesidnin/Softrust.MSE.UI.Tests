@@ -34,8 +34,12 @@ public class TestBase {
                     journalMseTitle = $(By.xpath("//div[text()=' Журнал направлений на медико-социальную экспертизу (МСЭ) ']")),
                     fioControl = $(byAttribute("formcontrolname","fio")),
                     fioControl2 = $(By.xpath("//input[contains(@class,'mat-input-element mat-form-field-autofill-control')]")),
-                    countRec = $(".count-rec"),
+                    countRecGrid = $(".count-rec"),
+                    dateControl = $(By.xpath("//input[@name='date_valid']")),
                     gridFio = $(By.xpath("//td[contains(@class,'mat-cell cdk-column-fio')]")),
+                    gridDateCell = $(By.xpath("(//td[@role='gridcell'])[2]")),
+                    eraiseButton = $(".dashed_link"),
+                    gridSortByDateButton = $(By.xpath("//button[@class='mat-sort-header-button']")),
                     findButton = $(By.xpath("//span[text()='Найти']"));
 
     //----Служебные--------------------------------------------------------------------------------------------------
