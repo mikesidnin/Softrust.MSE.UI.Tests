@@ -17,8 +17,9 @@ import static helpers.Environment.*;
 
 
 public class TestBase {
+      static String urlMse;
 
-     //----Локаторы---------------------------------------------------------------------------------------------------
+//----Локаторы-------------------------------------------------------------------------------------------------------
     //----Зеленый МИС------------------------------------------------------------------------------------------------
     SelenideElement loginControl = $("#Login"),
                     welcomeTitle = $(".main-title"),
@@ -34,6 +35,8 @@ public class TestBase {
                     journalMseTitle = $(By.xpath("//div[text()=' Журнал направлений на медико-социальную экспертизу (МСЭ) ']")),
                     fioControl = $(byAttribute("formcontrolname","fio")),
                     fioControl2 = $(By.xpath("//input[contains(@class,'mat-input-element mat-form-field-autofill-control')]")),
+                    statusControl = $("#mat-input-1"),
+                    resultControl = $(By.xpath("//input[@placeholder='Заключение']")),
                     countRecGrid = $(".count-rec"),
                     dateBeginControl = $(By.xpath("//input[@name='date_valid']")),
                     dateEndControl = $(By.xpath("(//input[@name='date_valid'])[2]")),
@@ -41,10 +44,26 @@ public class TestBase {
                     gridDateCell = $(By.xpath("(//td[@role='gridcell'])[2]")),
                     eraiseButton = $(".dashed_link"),
                     gridSortByDateButton = $(By.xpath("//button[@class='mat-sort-header-button']")),
-                    findButton = $(By.xpath("//span[text()='Найти']"));
+                    findButton = $(By.xpath("//span[text()='Найти']")),
+                    nextButton = $(By.xpath("(//div[@class='page-element']//button)[3]"));
+
+    //----Массив локаторов статусов направлений-----------------------------------------------------------------------
+    //----Сделано в качестве тренеровки и эксперимента. Способ рабочий------------------------------------------------
+    SelenideElement[] statusControlValues = {$(By.xpath("//span[@class='mat-option-text']")),
+                                             $(By.xpath("(//span[@class='mat-option-text'])[2]")),
+                                             $(By.xpath("(//span[@class='mat-option-text'])[3]")),
+                                             $(By.xpath("//mat-option[@title='Ошибка при отправке']//span[1]")),
+                                             $(By.xpath("//mat-option[@title='Зарегистрирован']//span[1]")),
+                                             $(By.xpath("//mat-option[@title='Ошибка регистрации']//span[1]")),
+                                             $(By.xpath("//mat-option[@title='Аннулирован']//span[1]"))
+    };
+    //----Сделано в качестве тренеровки и эксперимента. Способ рабочий------------------------------------------------
+    SelenideElement[] resultControlValues = {$(By.xpath("//span[@class='mat-option-text']")),
+                                             $(By.xpath("(//span[@class='mat-option-text'])[2]"))};
 
     //----Служебные--------------------------------------------------------------------------------------------------
     SelenideElement body = $("body");
+
 //-------------------------------------------------------------------------------------------------------------------
 
     //----Собираем УРЛ журнала МСЭ-----------------------------------------------------------------------------------
@@ -59,6 +78,7 @@ public class TestBase {
 
         open(ipAddress + relativePath + "?" + ticket+ "&" + docPrvdIdPart + "&" + misUrl + "&" + returnUrl);
     }
+
     //----Собираем УРЛ зеленого МИСа---------------------------------------------------------------------------------
     public void openURLWebMis() {
 
@@ -67,6 +87,7 @@ public class TestBase {
 
         open(ipAddress + relativePath);
     }
+
 //-------------------------------------------------------------------------------------------------------------------
 
     @BeforeAll
