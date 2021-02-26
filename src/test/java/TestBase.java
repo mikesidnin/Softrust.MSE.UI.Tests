@@ -1,6 +1,5 @@
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
-import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -17,6 +16,7 @@ import static helpers.Environment.*;
 
 
 public class TestBase {
+
       static String urlMse;
 
 //----Локаторы-------------------------------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ public class TestBase {
 //-------------------------------------------------------------------------------------------------------------------
 
     //----Собираем УРЛ журнала МСЭ-----------------------------------------------------------------------------------
-    public void openURLMseJournal(String docPrvdId) {
+    public String openURLMseJournal(String docPrvdId) {
 
         String ipAddress = "http://109.95.224.42:2165/",
                 relativePath = "test2/mse/log",
@@ -76,7 +76,7 @@ public class TestBase {
                 misUrl = "MisUrl=http:%2F%2F192.168.7.54%2Fmis%2Ftest2",
                 returnUrl = "ReturnUrl=http:%2F%2F192.168.7.54%2Fmis%2Ftest2%2FMain%2FDefault";
 
-        open(ipAddress + relativePath + "?" + ticket+ "&" + docPrvdIdPart + "&" + misUrl + "&" + returnUrl);
+        return ipAddress + relativePath + "?" + ticket+ "&" + docPrvdIdPart + "&" + misUrl + "&" + returnUrl;
     }
 
     //----Собираем УРЛ зеленого МИСа---------------------------------------------------------------------------------
@@ -98,7 +98,7 @@ public class TestBase {
     }
 
     @BeforeEach
-    public void BeforeEachTest(){
+    public void BeforeEachTest() {
         Configuration.startMaximized = true;
         //----Если настройка Jenkins пустая, то берем дефолтные значения + дебаг и тестирование-------------------------
         if (mkabId == null || tapId == null || docPrvdId == null) {
@@ -110,6 +110,10 @@ public class TestBase {
         if (user == null || password == null) {
             user = "sidnin_doc"; //admin
             password = "11";
+        }
+
+        if (urlMse == null) {
+            urlMse = openURLMseJournal(docPrvdId);
         }
     }
 

@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byAttribute;
 import static helpers.Environment.*;
 import static io.qameta.allure.Allure.step;
 import static com.codeborne.selenide.Selenide.*;
@@ -23,58 +22,8 @@ class MseJournalTests extends TestBase {
 
     @Test
     @Tag("web")
-    @DisplayName("Переход в журнал направлений на МСЭ.")
-    void routToMseJournal() {
-
-        step("Логин в ВебМИС.", () -> {
-            openURLWebMis();
-
-            welcomeTitle.shouldHave(text("Вход в систему"));
-            welcomeTitle.shouldBe(visible);
-
-            loginControl.setValue(user);
-            passwordControl.setValue(password);
-            signInButton.click();
-
-            body.shouldHave(text("Выход"));
-            exitButton.shouldBe(visible);
-        });
-
-        step("Переход на дашборд.", () -> {
-
-            //----В течении 10 секунд ждем выплывающие сообщения и закрываем их-------------------------------------
-            long start = System.currentTimeMillis(),
-                 end = start + 10*1000;
-
-            while(System.currentTimeMillis() < end){
-                if (closeButton.isDisplayed()) {
-                    closeButton.click();
-                }
-            }
-            //------------------------------------------------------------------------------------------------------
-            dashboardButton.click();
-
-            mseButton.scrollIntoView(("{behavior: \"instant\", block: \"center\", inline: \"center\"}"));
-            mseButton.shouldBe(visible);
-        });
-
-        step("Переход в журнал направлений на МСЭ.", () -> {
-
-            mseButton.scrollIntoView(("{behavior: \"instant\", block: \"center\", inline: \"center\"}"));
-            mseButton.click();
-
-            switchTo().window(1);
-            body.shouldHave(text("Журнал направлений на медико-социальную экспертизу (МСЭ)"));
-            journalMseTitle.shouldBe(visible);
-
-            urlMse = WebDriverRunner.url();
-        });
-    }
-
-    @Test
-    @Tag("web")
-    @DisplayName("Тесты полей фильтрации в журнале МСЭ.")
-    void journalMseTests() {
+    @DisplayName("Поиск по номеру направления в журнале МСЭ.")
+    void journalMseNumberTests() {
 
         step("Поиск по номеру направления.", () -> {
 
@@ -112,8 +61,15 @@ class MseJournalTests extends TestBase {
             assertNotSame(valueNew, valueOld);
 
         });
+    }
 
+    @Test
+    @Tag("web")
+    @DisplayName("Поиск по ФИО направления в журнале МСЭ.")
+    void journalMseFIOTests() {
         step("Поиск по ФИО направления.", () -> {
+
+            open(urlMse);
 
             fioControl.setValue("Проверочный");
             findButton.click();
@@ -146,8 +102,15 @@ class MseJournalTests extends TestBase {
             assertNotSame(valueNew, valueOld);
 
         });
+    }
+    @Test
+    @Tag("web")
+    @DisplayName("Поиск по дате подачи с в журнале МСЭ.")
+    void journalMseDateBeginTests() {
 
         step("Поиск по дате подачи с.", () -> {
+
+            open(urlMse);
 
             dateBeginControl.setValue("01.02.2021");
             findButton.click();
@@ -179,8 +142,16 @@ class MseJournalTests extends TestBase {
 
             assertNotSame(valueNew, valueOld);
         });
+    }
+
+    @Test
+    @Tag("web")
+    @DisplayName("Поиск по дате подачи по в журнале МСЭ.")
+    void journalMseDateEndTests() {
 
         step("Поиск по дате подачи по.", () -> {
+
+            open(urlMse);
 
             dateEndControl.setValue("19.02.2021");
             findButton.click();
@@ -214,19 +185,29 @@ class MseJournalTests extends TestBase {
 
             Assertions.assertNotSame(valueNew, valueOld, "");
         });
+    }
+
+    @Test
+    @Tag("web")
+    @DisplayName("Поиск по статусу направления в журнале МСЭ.")
+    void journalMseStatusTests() {
 
         step("Поиск по статусу направления", () -> {
+
+            open(urlMse);
+            statusControl.click();
 
             /*Внешний цикл по всем статусам направлений.
             Смотрим число найденый записей по статусу.
             Если < 10, то бегаем по числу строк.
             Если > 10, то бегаем по всем вкладкам.
             На последней вкладке смотрим на строки,
-            кол-во которых остаток при делении на 10 общ числа строк.
-            */
+            кол-во которых остаток при делении на 10 общ числа строк.*/
+
             for (int i = 0; i < statusControlValues.length; i++) {
 
                 statusControl.click();
+
                 statusControlValues[i].click();
                 findButton.click();
 
@@ -237,13 +218,12 @@ class MseJournalTests extends TestBase {
                 int lastPageRows = numberRows % 10;
                 Assertions.assertNotEquals(0, numberRows, "Грида пустая!");
 
-                if (numberRows <= 10){
+                if (numberRows <= 10) {
                     for (int j = 1; j <= numberRows; j++) {
                         String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-status')]//span)[" + j + "]")).getText();
                         Assertions.assertEquals(currentStatus, statusLabel, "Статус не совпадает!");
                     }
-                }
-                else {
+                } else {
                     while (nextButton.isEnabled()) {
                         for (int j = 1; j <= 10; j++) {
                             String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-status')]//span)[" + j + "]")).getText();
@@ -260,8 +240,16 @@ class MseJournalTests extends TestBase {
                 eraiseButton.click();
             }
         });
+    }
+
+    @Test
+    @Tag("web")
+    @DisplayName("Поиск по заключению направления в журнале МСЭ.")
+    void journalMseResultTests() {
 
         step("Поиск по заключению направления", () -> {
+
+            open(urlMse);
 
             for (int i = 0; i < resultControlValues.length; i++) {
 
@@ -276,31 +264,38 @@ class MseJournalTests extends TestBase {
                 int lastPageRows = numberRows % 10;
                 Assertions.assertNotEquals(0, numberRows, "Грида пустая!");
 
-                if (numberRows <= 10){
+                if (numberRows <= 10) {
                     for (int j = 1; j <= numberRows; j++) {
-                        String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-conclusion')])["+ j + "]")).getText();
+                        String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-conclusion')])[" + j + "]")).getText();
                         Assertions.assertEquals(currentResult, statusLabel, "Заключение не соответствует!");
                     }
-                }
-                else {
+                } else {
                     while (nextButton.isEnabled()) {
                         for (int j = 1; j <= 10; j++) {
-                            String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-conclusion')])["+ j + "]")).getText();
+                            String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-conclusion')])[" + j + "]")).getText();
                             Assertions.assertEquals(currentResult, statusLabel, "Заключение не соответствует!");
                         }
                         nextButton.click();
                     }
 
                     for (int j = 1; j <= lastPageRows; j++) {
-                        String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-conclusion')])["+ j + "]")).getText();
+                        String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-conclusion')])[" + j + "]")).getText();
                         Assertions.assertEquals(currentResult, statusLabel, "Заключение не соответствует!");
                     }
                 }
                 eraiseButton.click();
             }
         });
+    }
 
-        step("Очистка поля фильтрации Дата по.", () -> {
+    @Test
+    @Tag("web")
+    @DisplayName("Поиск по заключению направления в журнале МСЭ.")
+    void journalMseAutorTests() {
+
+        open(urlMse);
+
+        step("Поиск по автору и статусу направления на МСЭ.", () -> {
 
             statusControl.click();
             statusControlValues[0].click();
@@ -316,40 +311,46 @@ class MseJournalTests extends TestBase {
             findButton.click();
 
             int rowsStatusAndAutor = Integer.parseInt(countRecGrid.getText());
-            assertNotEquals(rowsStatus,rowsStatusAndAutor,"Количество строк с автором и без одинаковое!");
+            assertNotEquals(rowsStatus, rowsStatusAndAutor, "Количество строк с автором и без одинаковое!");
 
-            String currentAutor= $(By.xpath("//input[@placeholder='Автор направления']")).getValue();
+            String currentAutor = $(By.xpath("//input[@placeholder='Автор направления']")).getValue();
             System.out.println(currentAutor);
 
             int lastPageRows = rowsStatusAndAutor % 10;
             Assertions.assertNotEquals(0, rowsStatusAndAutor, "Грида пустая!");
 
-            if (rowsStatusAndAutor <= 10){
+            if (rowsStatusAndAutor <= 10) {
                 for (int j = 1; j <= rowsStatusAndAutor; j++) {
-                    String autorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])["+ j + "]")).getText();
+                    String autorLabel;
+                    autorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
+                    assert currentAutor != null;
                     assertTrue(currentAutor.contains(autorLabel), "Автор не соответствует!");
                 }
-            }
-            else {
+            } else {
                 while (nextButton.isEnabled()) {
                     for (int j = 1; j <= 10; j++) {
-                        String autorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])["+ j + "]")).getText();
+                        String autorLabel;
+                        autorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
+                        assert currentAutor != null;
                         assertTrue(currentAutor.contains(autorLabel), "Автор не соответствует!");
                     }
                     nextButton.click();
                 }
 
                 for (int j = 1; j <= lastPageRows; j++) {
-                    String autorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])["+ j + "]")).getText();
+                    String autorLabel;
+                    autorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
+                    assert currentAutor != null;
                     assertTrue(currentAutor.contains(autorLabel), "Автор не соответствует!");
                 }
             }
             eraiseButton.click();
 
         });
-
     }
+
 }
+
 
 
 
