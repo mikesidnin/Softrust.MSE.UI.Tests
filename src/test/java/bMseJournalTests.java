@@ -1,4 +1,3 @@
-import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -10,15 +9,13 @@ import org.openqa.selenium.By;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static com.codeborne.selenide.Condition.*;
-import static helpers.Environment.*;
 import static io.qameta.allure.Allure.step;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Owner("Mikhail Sidnin")
 @Feature("Журнал направлений на МСЭ.")
-class MseJournalTests extends TestBase {
+class bMseJournalTests extends TestBase {
 
     @Test
     @Tag("web")
@@ -293,9 +290,9 @@ class MseJournalTests extends TestBase {
     @DisplayName("Поиск по заключению направления в журнале МСЭ.")
     void journalMseAutorTests() {
 
-        open(urlMse);
-
         step("Поиск по автору и статусу направления на МСЭ.", () -> {
+
+            open(urlMse);
 
             statusControl.click();
             statusControlValues[0].click();
@@ -306,46 +303,107 @@ class MseJournalTests extends TestBase {
 
             statusControl.click();
             statusControlValues[0].click();
-            $(By.xpath("//input[@placeholder='Автор направления']")).click();
-            $(By.xpath("//span[@class='mat-option-text']")).click();
+            authorControl.click();
+            authorFirstValue.click();
             findButton.click();
 
-            int rowsStatusAndAutor = Integer.parseInt(countRecGrid.getText());
-            assertNotEquals(rowsStatus, rowsStatusAndAutor, "Количество строк с автором и без одинаковое!");
+            int rowsStatusAndAuthor = Integer.parseInt(countRecGrid.getText());
+            assertNotEquals(rowsStatus, rowsStatusAndAuthor, "Количество строк с автором и без одинаковое!");
 
-            String currentAutor = $(By.xpath("//input[@placeholder='Автор направления']")).getValue();
-            System.out.println(currentAutor);
+            String currentAuthor = authorControl.getValue();
+            System.out.println(currentAuthor);
 
-            int lastPageRows = rowsStatusAndAutor % 10;
-            Assertions.assertNotEquals(0, rowsStatusAndAutor, "Грида пустая!");
+            int lastPageRows = rowsStatusAndAuthor % 10;
+            Assertions.assertNotEquals(0, rowsStatusAndAuthor, "Грида пустая!");
 
-            if (rowsStatusAndAutor <= 10) {
-                for (int j = 1; j <= rowsStatusAndAutor; j++) {
-                    String autorLabel;
-                    autorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
-                    assert currentAutor != null;
-                    assertTrue(currentAutor.contains(autorLabel), "Автор не соответствует!");
+            if (rowsStatusAndAuthor <= 10) {
+                for (int j = 1; j <= rowsStatusAndAuthor; j++) {
+                    String authorLabel;
+                    authorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
+                    assert currentAuthor != null;
+                    System.out.println(authorLabel);
+                    assertTrue(currentAuthor.contains(authorLabel), "Автор не соответствует!");
                 }
             } else {
                 while (nextButton.isEnabled()) {
                     for (int j = 1; j <= 10; j++) {
-                        String autorLabel;
-                        autorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
-                        assert currentAutor != null;
-                        assertTrue(currentAutor.contains(autorLabel), "Автор не соответствует!");
+                        String authorLabel;
+                        authorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
+                        assert currentAuthor != null;
+                        System.out.println(authorLabel);
+                        assertTrue(currentAuthor.contains(authorLabel), "Автор не соответствует!");
                     }
                     nextButton.click();
                 }
 
                 for (int j = 1; j <= lastPageRows; j++) {
-                    String autorLabel;
-                    autorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
-                    assert currentAutor != null;
-                    assertTrue(currentAutor.contains(autorLabel), "Автор не соответствует!");
+                    String authorLabel;
+                    authorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
+                    assert currentAuthor != null;
+                    System.out.println(authorLabel);
+                    assertTrue(currentAuthor.contains(authorLabel), "Автор не соответствует!");
                 }
             }
             eraiseButton.click();
+        });
+    }
 
+    @Test
+    @Tag("web")
+    @DisplayName("Поиск по заключению направления в журнале МСЭ.")
+    void journalMseMemberTests() {
+
+        step("Поиск по автору и статусу направления на МСЭ.", () -> {
+
+            open(urlMse);
+
+            findButton.click();
+
+            int rowsStatus = Integer.parseInt(countRecGrid.getText());
+            eraiseButton.click();
+
+            memberControl.click();;
+            memberFirstValue.click();
+            findButton.click();
+
+            int rowsStatusAndAuthor = Integer.parseInt(countRecGrid.getText());
+            assertNotEquals(rowsStatus, rowsStatusAndAuthor, "Количество всех строк совпадает с количеством строк члена комиссии!");
+
+            String currentMember = memberControl.getValue();
+            String cutMember = currentMember.substring(currentMember.indexOf("-") + 2, currentMember.indexOf("(") - 1);
+
+            int lastPageRows = rowsStatusAndAuthor % 10;
+            Assertions.assertNotEquals(0, rowsStatusAndAuthor, "Грида пустая!");
+
+            if (rowsStatusAndAuthor <= 10) {
+                for (int j = 1; j <= rowsStatusAndAuthor; j++) {
+                    String memberLabel;
+                    memberLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-docCommissions')])[" + j + "]")).getText();
+                    assert currentMember != null;
+                    System.out.println(memberLabel);
+                    assertTrue(memberLabel.contains(cutMember), "Члена нет в комиссии!");
+                }
+            } else {
+                while (nextButton.isEnabled()) {
+                    for (int j = 1; j <= 10; j++) {
+                        String memberLabel;
+                        memberLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-docCommissions')])[" + j + "]")).getText();
+                        assert currentMember != null;
+                        System.out.println(memberLabel);
+                        assertTrue(memberLabel.contains(cutMember), "Члена нет в комиссии!");
+                    }
+                    nextButton.click();
+                }
+
+                for (int j = 1; j <= lastPageRows; j++) {
+                    String memberLabel;
+                    memberLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-docCommissions')])[" + j + "]")).getText();
+                    assert currentMember != null;
+                    System.out.println(memberLabel);
+                    assertTrue(memberLabel.contains(cutMember), "Члена нет в комиссии!");
+                }
+            }
+            eraiseButton.click();
         });
     }
 

@@ -14,7 +14,6 @@ import static helpers.AttachmentsHelper.*;
 import static helpers.DriverHelper.*;
 import static helpers.Environment.*;
 
-
 public class TestBase {
 
       static String urlMse;
@@ -40,6 +39,10 @@ public class TestBase {
                     countRecGrid = $(".count-rec"),
                     dateBeginControl = $(By.xpath("//input[@name='date_valid']")),
                     dateEndControl = $(By.xpath("(//input[@name='date_valid'])[2]")),
+                    authorControl = $("#mat-input-4"),
+                    memberControl = $(By.id("mat-input-3")),
+                    memberFirstValue = $(By.xpath("//span[@class='mat-option-text']")),
+                    authorFirstValue = $(By.xpath("//span[@class='mat-option-text']")),
                     gridFio = $(By.xpath("//td[contains(@class,'mat-cell cdk-column-fio')]")),
                     gridDateCell = $(By.xpath("(//td[@role='gridcell'])[2]")),
                     eraiseButton = $(".dashed_link"),

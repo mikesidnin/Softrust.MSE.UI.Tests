@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.Tag;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 import org.openqa.selenium.By;
 
 import java.text.SimpleDateFormat;
@@ -14,11 +16,11 @@ import static com.codeborne.selenide.Condition.*;
 import static helpers.Environment.*;
 import static io.qameta.allure.Allure.step;
 import static com.codeborne.selenide.Selenide.*;
-import static org.junit.jupiter.api.Assertions.*;
+
 
 @Owner("Mikhail Sidnin")
 @Feature("Журнал направлений на МСЭ.")
-class WebMis extends TestBase {
+class aWebMis extends TestBase {
 
     @Test
     @Tag("web")
