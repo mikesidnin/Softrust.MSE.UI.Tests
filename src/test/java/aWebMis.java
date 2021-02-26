@@ -66,6 +66,7 @@ class aWebMis extends TestBase {
             mseButton.click();
 
             switchTo().window(1);
+
             body.shouldHave(text("Журнал направлений на медико-социальную экспертизу (МСЭ)"));
             journalMseTitle.shouldBe(visible);
 

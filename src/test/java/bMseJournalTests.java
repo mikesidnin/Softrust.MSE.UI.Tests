@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import static io.qameta.allure.Allure.step;
 import static com.codeborne.selenide.Selenide.*;
@@ -68,12 +69,20 @@ class bMseJournalTests extends TestBase {
 
             open(urlMse);
 
-            fioControl.setValue("Проверочный");
+            findButton.click();
+
+            int rnd = new Random().nextInt(10) + 1;
+            System.out.println(rnd);
+
+            String rndFio = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-fio')])[" + rnd + "]")).getText();
+            System.out.println(rndFio);
+
+            fioControl.setValue(rndFio);
             findButton.click();
 
             String numberControl = fioControl2.getValue();
             System.out.println(numberControl);
-            assertTrue(numberControl.contains("Проверочный"));
+            assertTrue(numberControl.contains(rndFio));
 
             String countRecValue = countRecGrid.getText();
             System.out.println(countRecValue);
@@ -287,7 +296,7 @@ class bMseJournalTests extends TestBase {
 
     @Test
     @Tag("web")
-    @DisplayName("Поиск по заключению направления в журнале МСЭ.")
+    @DisplayName("Поиск по автору и статусу направления в журнале МСЭ.")
     void journalMseAutorTests() {
 
         step("Поиск по автору и статусу направления на МСЭ.", () -> {
@@ -350,10 +359,10 @@ class bMseJournalTests extends TestBase {
 
     @Test
     @Tag("web")
-    @DisplayName("Поиск по заключению направления в журнале МСЭ.")
+    @DisplayName("Поиск по члену комиссии в журнале МСЭ.")
     void journalMseMemberTests() {
 
-        step("Поиск по автору и статусу направления на МСЭ.", () -> {
+        step("Поиск по члену комиссии.", () -> {
 
             open(urlMse);
 
