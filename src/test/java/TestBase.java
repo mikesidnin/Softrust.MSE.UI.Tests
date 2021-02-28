@@ -4,6 +4,7 @@ import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
@@ -13,6 +14,7 @@ import static com.codeborne.selenide.Selenide.*;
 import static helpers.AttachmentsHelper.*;
 import static helpers.DriverHelper.*;
 import static helpers.Environment.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBase {
 
@@ -86,11 +88,47 @@ public class TestBase {
     public void openURLWebMis() {
 
         String ipAddress = "http://192.168.7.54/",
-                relativePath = "mis/test2/";
+                relativePath = "mis/text2/";
 
         open(ipAddress + relativePath);
     }
 
+    //----Метод анализа интересующих ячеек во всей результирующей таблице--------------------------------------------
+            /*Внешний цикл по всем статусам направлений.
+            Смотрим число найденый записей по статусу.
+            Если < 10, то бегаем по числу строк.
+            Если > 10, то бегаем по всем вкладкам.
+            На последней вкладке смотрим на строки,
+            кол-во которых остаток при делении на 10 общ числа строк.*/
+    public void analyseTable(String column, String currentValue) {
+
+        int numberRows = Integer.parseInt(countRecGrid.getText());
+        Assertions.assertNotEquals(0, numberRows, "Грида пустая!");
+        int lastPageRows = numberRows % 10;
+
+        if (numberRows <= 10) {
+            for (int j = 1; j <= numberRows; j++) {
+                String nameLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-" + column + "')])[" + j + "]")).getText();
+                assert currentValue != null;
+                assertTrue(nameLabel.contains(currentValue), column + " в гриде не совпадает с поиском!");
+            }
+        } else {
+            while (nextButton.isEnabled()) {
+                for (int j = 1; j <= 10; j++) {
+                    String nameLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-" + column + "')])[" + j + "]")).getText();
+                    assert currentValue != null;
+                    assertTrue(nameLabel.contains(currentValue), column + " в гриде не совпадает с поиском!");
+                }
+                nextButton.click();
+            }
+
+            for (int j = 1; j <= lastPageRows; j++) {
+                String nameLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-" + column + "')])[" + j + "]")).getText();
+                assert currentValue != null;
+                assertTrue(nameLabel.contains(currentValue), column + " в гриде не совпадает с поиском!");
+            }
+        }
+    }
 //-------------------------------------------------------------------------------------------------------------------
 
     @BeforeAll

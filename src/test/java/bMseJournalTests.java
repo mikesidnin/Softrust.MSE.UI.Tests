@@ -56,8 +56,7 @@ class bMseJournalTests extends TestBase {
             String valueNew = fioControl2.getValue();
             System.out.println(valueNew);
 
-            assertNotSame(valueNew, valueOld);
-
+            assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
 
@@ -72,27 +71,14 @@ class bMseJournalTests extends TestBase {
             findButton.click();
 
             int rnd = new Random().nextInt(10) + 1;
-            System.out.println(rnd);
-
             String rndFio = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-fio')])[" + rnd + "]")).getText();
-            System.out.println(rndFio);
 
             fioControl.setValue(rndFio);
             findButton.click();
 
-            String numberControl = fioControl2.getValue();
-            System.out.println(numberControl);
-            assertTrue(numberControl.contains(rndFio));
+            String currentFio = fioControl2.getValue();
 
-            String countRecValue = countRecGrid.getText();
-            System.out.println(countRecValue);
-            assertTrue(countRecValue.contains("1"));
-
-            String personNameText = gridFio.getText();
-            System.out.println(personNameText);
-            assertTrue(personNameText.contains("Проверочный"));
-            assertTrue(personNameText.contains("Николай"));
-            assertTrue(personNameText.contains("Сергеевич"));
+            analyseTable("fio", currentFio);
         });
 
         step("Очистка поля фильтрации ФИО.", () -> {
@@ -105,8 +91,7 @@ class bMseJournalTests extends TestBase {
             String valueNew = fioControl2.getValue();
             System.out.println(valueNew);
 
-            assertNotSame(valueNew, valueOld);
-
+            assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
     @Test
@@ -146,7 +131,7 @@ class bMseJournalTests extends TestBase {
             String valueNew = dateBeginControl.getValue();
             System.out.println(valueNew);
 
-            assertNotSame(valueNew, valueOld);
+            assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
 
@@ -189,7 +174,7 @@ class bMseJournalTests extends TestBase {
             String valueNew = dateEndControl.getValue();
             System.out.println(valueNew);
 
-            Assertions.assertNotSame(valueNew, valueOld, "");
+            assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
 
@@ -203,48 +188,33 @@ class bMseJournalTests extends TestBase {
             open(urlMse);
             statusControl.click();
 
-            /*Внешний цикл по всем статусам направлений.
-            Смотрим число найденый записей по статусу.
-            Если < 10, то бегаем по числу строк.
-            Если > 10, то бегаем по всем вкладкам.
-            На последней вкладке смотрим на строки,
-            кол-во которых остаток при делении на 10 общ числа строк.*/
-
             for (int i = 0; i < statusControlValues.length; i++) {
 
                 statusControl.click();
-
                 statusControlValues[i].click();
                 findButton.click();
 
                 String currentStatus = statusControl.getValue();
                 System.out.println(currentStatus);
 
-                int numberRows = Integer.parseInt(countRecGrid.getText());
-                int lastPageRows = numberRows % 10;
-                Assertions.assertNotEquals(0, numberRows, "Грида пустая!");
-
-                if (numberRows <= 10) {
-                    for (int j = 1; j <= numberRows; j++) {
-                        String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-status')]//span)[" + j + "]")).getText();
-                        Assertions.assertEquals(currentStatus, statusLabel, "Статус не совпадает!");
-                    }
-                } else {
-                    while (nextButton.isEnabled()) {
-                        for (int j = 1; j <= 10; j++) {
-                            String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-status')]//span)[" + j + "]")).getText();
-                            Assertions.assertEquals(currentStatus, statusLabel, "Статус не совпадает!");
-                        }
-                        nextButton.click();
-                    }
-
-                    for (int j = 1; j <= lastPageRows; j++) {
-                        String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-status')]//span)[" + j + "]")).getText();
-                        Assertions.assertEquals(currentStatus, statusLabel, "Статус не совпадает!");
-                    }
-                }
+                analyseTable("status", currentStatus);
                 eraiseButton.click();
             }
+            statusControl.click();
+            statusControlValues[1].click();
+        });
+
+        step("Очистка поля фильтрации статус.", () -> {
+
+            String valueOld = statusControl.getValue();
+            System.out.println(valueOld);
+
+            eraiseButton.click();
+
+            String valueNew = statusControl.getValue();
+            System.out.println(valueNew);
+
+            assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
 
@@ -263,34 +233,27 @@ class bMseJournalTests extends TestBase {
                 resultControlValues[i].click();
                 findButton.click();
 
-                String currentResult = resultControl.getValue();
-                System.out.println(currentResult);
+                String currentConclusion = resultControl.getValue();
+                System.out.println(currentConclusion);
 
-                int numberRows = Integer.parseInt(countRecGrid.getText());
-                int lastPageRows = numberRows % 10;
-                Assertions.assertNotEquals(0, numberRows, "Грида пустая!");
-
-                if (numberRows <= 10) {
-                    for (int j = 1; j <= numberRows; j++) {
-                        String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-conclusion')])[" + j + "]")).getText();
-                        Assertions.assertEquals(currentResult, statusLabel, "Заключение не соответствует!");
-                    }
-                } else {
-                    while (nextButton.isEnabled()) {
-                        for (int j = 1; j <= 10; j++) {
-                            String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-conclusion')])[" + j + "]")).getText();
-                            Assertions.assertEquals(currentResult, statusLabel, "Заключение не соответствует!");
-                        }
-                        nextButton.click();
-                    }
-
-                    for (int j = 1; j <= lastPageRows; j++) {
-                        String statusLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-conclusion')])[" + j + "]")).getText();
-                        Assertions.assertEquals(currentResult, statusLabel, "Заключение не соответствует!");
-                    }
-                }
+                analyseTable("conclusion", currentConclusion);
                 eraiseButton.click();
             }
+            resultControl.click();
+            resultControlValues[1].click();
+        });
+
+        step("Очистка поля фильтрации заключение.", () -> {
+
+            String valueOld = resultControl.getValue();
+            System.out.println(valueOld);
+
+            eraiseButton.click();
+
+            String valueNew = resultControl.getValue();
+            System.out.println(valueNew);
+
+            assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
 
@@ -320,41 +283,25 @@ class bMseJournalTests extends TestBase {
             assertNotEquals(rowsStatus, rowsStatusAndAuthor, "Количество строк с автором и без одинаковое!");
 
             String currentAuthor = authorControl.getValue();
-            System.out.println(currentAuthor);
+            String cutAuthor = currentAuthor.substring(currentAuthor.indexOf("-") + 2, currentAuthor.indexOf("(") - 1);
+            System.out.println(cutAuthor);
 
-            int lastPageRows = rowsStatusAndAuthor % 10;
-            Assertions.assertNotEquals(0, rowsStatusAndAuthor, "Грида пустая!");
-
-            if (rowsStatusAndAuthor <= 10) {
-                for (int j = 1; j <= rowsStatusAndAuthor; j++) {
-                    String authorLabel;
-                    authorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
-                    assert currentAuthor != null;
-                    System.out.println(authorLabel);
-                    assertTrue(currentAuthor.contains(authorLabel), "Автор не соответствует!");
-                }
-            } else {
-                while (nextButton.isEnabled()) {
-                    for (int j = 1; j <= 10; j++) {
-                        String authorLabel;
-                        authorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
-                        assert currentAuthor != null;
-                        System.out.println(authorLabel);
-                        assertTrue(currentAuthor.contains(authorLabel), "Автор не соответствует!");
-                    }
-                    nextButton.click();
-                }
-
-                for (int j = 1; j <= lastPageRows; j++) {
-                    String authorLabel;
-                    authorLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-author')])[" + j + "]")).getText();
-                    assert currentAuthor != null;
-                    System.out.println(authorLabel);
-                    assertTrue(currentAuthor.contains(authorLabel), "Автор не соответствует!");
-                }
-            }
-            eraiseButton.click();
+            analyseTable("author", cutAuthor);
         });
+
+        step("Очистка поля фильтрации автор.", () -> {
+
+            String valueOld = authorControl.getValue();
+            System.out.println(valueOld);
+
+            eraiseButton.click();
+
+            String valueNew = authorControl.getValue();
+            System.out.println(valueNew);
+
+            assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
+        });
+
     }
 
     @Test
@@ -381,41 +328,22 @@ class bMseJournalTests extends TestBase {
             String currentMember = memberControl.getValue();
             String cutMember = currentMember.substring(currentMember.indexOf("-") + 2, currentMember.indexOf("(") - 1);
 
-            int lastPageRows = rowsStatusAndAuthor % 10;
-            Assertions.assertNotEquals(0, rowsStatusAndAuthor, "Грида пустая!");
+            analyseTable("docCommissions", cutMember);
+        });
 
-            if (rowsStatusAndAuthor <= 10) {
-                for (int j = 1; j <= rowsStatusAndAuthor; j++) {
-                    String memberLabel;
-                    memberLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-docCommissions')])[" + j + "]")).getText();
-                    assert currentMember != null;
-                    System.out.println(memberLabel);
-                    assertTrue(memberLabel.contains(cutMember), "Члена нет в комиссии!");
-                }
-            } else {
-                while (nextButton.isEnabled()) {
-                    for (int j = 1; j <= 10; j++) {
-                        String memberLabel;
-                        memberLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-docCommissions')])[" + j + "]")).getText();
-                        assert currentMember != null;
-                        System.out.println(memberLabel);
-                        assertTrue(memberLabel.contains(cutMember), "Члена нет в комиссии!");
-                    }
-                    nextButton.click();
-                }
+        step("Очистка поля фильтрации член комиссии.", () -> {
 
-                for (int j = 1; j <= lastPageRows; j++) {
-                    String memberLabel;
-                    memberLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-docCommissions')])[" + j + "]")).getText();
-                    assert currentMember != null;
-                    System.out.println(memberLabel);
-                    assertTrue(memberLabel.contains(cutMember), "Члена нет в комиссии!");
-                }
-            }
+            String valueOld = memberControl.getValue();
+            System.out.println(valueOld);
+
             eraiseButton.click();
+
+            String valueNew = memberControl.getValue();
+            System.out.println(valueNew);
+
+            assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
-
 }
 
 
