@@ -20,7 +20,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 @Owner("Mikhail Sidnin")
 @Feature("Журнал направлений на МСЭ.")
-class aWebMis extends TestBase {
+class WebMisLoginTest extends TestBase {
 
     @Test
     @Tag("web")

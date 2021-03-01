@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Owner("Mikhail Sidnin")
 @Feature("Журнал направлений на МСЭ.")
-class bMseJournalTests extends TestBase {
+class MseJournalTests extends TestBase {
 
     @Test
     @Tag("web")
@@ -29,6 +29,7 @@ class bMseJournalTests extends TestBase {
 
             fioControl.setValue("470101-202005");
             findButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String numberControl = fioControl2.getValue();
             System.out.println(numberControl);
@@ -52,6 +53,7 @@ class bMseJournalTests extends TestBase {
             System.out.println(valueOld);
 
             eraiseButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = fioControl2.getValue();
             System.out.println(valueNew);
@@ -75,6 +77,7 @@ class bMseJournalTests extends TestBase {
 
             fioControl.setValue(rndFio);
             findButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String currentFio = fioControl2.getValue();
 
@@ -87,6 +90,7 @@ class bMseJournalTests extends TestBase {
             System.out.println(valueOld);
 
             eraiseButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = fioControl2.getValue();
             System.out.println(valueNew);
@@ -105,6 +109,8 @@ class bMseJournalTests extends TestBase {
 
             dateBeginControl.setValue("01.02.2021");
             findButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
+
             gridSortByDateButton.click();
 
             sleep(1000); // Ждем пока отрисуется грида чтобы забрать нужное значение
@@ -127,6 +133,7 @@ class bMseJournalTests extends TestBase {
             System.out.println(valueOld);
 
             eraiseButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = dateBeginControl.getValue();
             System.out.println(valueNew);
@@ -146,6 +153,7 @@ class bMseJournalTests extends TestBase {
 
             dateEndControl.setValue("19.02.2021");
             findButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             gridSortByDateButton.click();
             sleep(1000);
@@ -170,6 +178,7 @@ class bMseJournalTests extends TestBase {
             System.out.println(valueOld);
 
             eraiseButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = dateEndControl.getValue();
             System.out.println(valueNew);
@@ -193,6 +202,7 @@ class bMseJournalTests extends TestBase {
                 statusControl.click();
                 statusControlValues[i].click();
                 findButton.click();
+                assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
                 String currentStatus = statusControl.getValue();
                 System.out.println(currentStatus);
@@ -210,6 +220,7 @@ class bMseJournalTests extends TestBase {
             System.out.println(valueOld);
 
             eraiseButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = statusControl.getValue();
             System.out.println(valueNew);
@@ -232,6 +243,7 @@ class bMseJournalTests extends TestBase {
                 resultControl.click();
                 resultControlValues[i].click();
                 findButton.click();
+                assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
                 String currentConclusion = resultControl.getValue();
                 System.out.println(currentConclusion);
@@ -249,6 +261,7 @@ class bMseJournalTests extends TestBase {
             System.out.println(valueOld);
 
             eraiseButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = resultControl.getValue();
             System.out.println(valueNew);
@@ -269,6 +282,7 @@ class bMseJournalTests extends TestBase {
             statusControl.click();
             statusControlValues[0].click();
             findButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             int rowsStatus = Integer.parseInt(countRecGrid.getText());
             eraiseButton.click();
@@ -278,6 +292,7 @@ class bMseJournalTests extends TestBase {
             authorControl.click();
             authorFirstValue.click();
             findButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             int rowsStatusAndAuthor = Integer.parseInt(countRecGrid.getText());
             assertNotEquals(rowsStatus, rowsStatusAndAuthor, "Количество строк с автором и без одинаковое!");
@@ -295,6 +310,7 @@ class bMseJournalTests extends TestBase {
             System.out.println(valueOld);
 
             eraiseButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = authorControl.getValue();
             System.out.println(valueNew);
@@ -314,6 +330,7 @@ class bMseJournalTests extends TestBase {
             open(urlMse);
 
             findButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             int rowsStatus = Integer.parseInt(countRecGrid.getText());
             eraiseButton.click();
@@ -321,6 +338,8 @@ class bMseJournalTests extends TestBase {
             memberControl.click();;
             memberFirstValue.click();
             findButton.click();
+
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             int rowsStatusAndAuthor = Integer.parseInt(countRecGrid.getText());
             assertNotEquals(rowsStatus, rowsStatusAndAuthor, "Количество всех строк совпадает с количеством строк члена комиссии!");
@@ -337,6 +356,7 @@ class bMseJournalTests extends TestBase {
             System.out.println(valueOld);
 
             eraiseButton.click();
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = memberControl.getValue();
             System.out.println(valueNew);
