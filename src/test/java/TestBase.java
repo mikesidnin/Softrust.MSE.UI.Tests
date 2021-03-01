@@ -1,3 +1,4 @@
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.logevents.SelenideLogger;
@@ -88,7 +89,7 @@ public class TestBase {
     public void openURLWebMis() {
 
         String ipAddress = "http://192.168.7.54/",
-                relativePath = "mis/text2/";
+                relativePath = "mis/test2/";
 
         open(ipAddress + relativePath);
     }
@@ -102,6 +103,7 @@ public class TestBase {
             кол-во которых остаток при делении на 10 общ числа строк.*/
     public void analyseTable(String column, String currentValue) {
 
+        countRecGrid.shouldBe(Condition.visible);
         int numberRows = Integer.parseInt(countRecGrid.getText());
         Assertions.assertNotEquals(0, numberRows, "Грида пустая!");
         int lastPageRows = numberRows % 10;
