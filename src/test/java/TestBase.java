@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.openqa.selenium.By;
 
+import java.util.Objects;
+
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selenide.*;
 import static helpers.AttachmentsHelper.*;
@@ -41,6 +43,7 @@ public class TestBase {
                     statusControl = $(By.xpath("//input[@placeholder='Статус']")),
                     resultControl = $(By.xpath("//input[@placeholder='Заключение']")),
                     countRecGrid = $(".count-rec"),
+                    matSelectValue = $(".mat-select-value"),
                     dateBeginControl = $(By.xpath("//input[@name='date_valid']")),
                     dateEndControl = $(By.xpath("(//input[@name='date_valid'])[2]")),
                     authorControl = $("#mat-input-4"),
@@ -104,10 +107,11 @@ public class TestBase {
         countRecGrid.shouldBe(Condition.visible);
         int numberRows = Integer.parseInt(countRecGrid.getText());
         assertNotEquals(0, numberRows, "Грида пустая!");
+        int matValue = Integer.parseInt(matSelectValue.getText());
         int lastPageRows = numberRows % 10;
 
         //----В результате поиска менее 10 строк---------------------------------------------------------------------
-        if (numberRows <= 10) {
+        if (numberRows <= matValue) {
             for (int j = 1; j <= numberRows; j++) {
                 //----Подставляем название ячейки и номер, забираем значение и сравниваем с эталоном-----------------
                 String nameLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-" + column + "')])[" + j + "]")).getText();
@@ -118,7 +122,7 @@ public class TestBase {
         else {
             while (nextButton.isEnabled()) {
                 //----Проверяем все вкладки, кроме последней---------------------------------------------------------
-                for (int j = 1; j <= 10; j++) {
+                for (int j = 1; j <= matValue; j++) {
                     //----Подставляем название ячейки и номер, забираем значение и сравниваем с эталоном-------------
                     String nameLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-" + column + "')])[" + j + "]")).getText();
                     assertTrue(nameLabel.contains(currentValue), column + " в гриде не совпадает с поиском!");
