@@ -15,6 +15,7 @@ import static com.codeborne.selenide.Selenide.*;
 import static helpers.AttachmentsHelper.*;
 import static helpers.DriverHelper.*;
 import static helpers.Environment.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestBase {
@@ -95,38 +96,39 @@ public class TestBase {
     }
 
     //----Метод анализа интересующих ячеек во всей результирующей таблице--------------------------------------------
-            /*Внешний цикл по всем статусам направлений.
-            Смотрим число найденый записей по статусу.
-            Если < 10, то бегаем по числу строк.
-            Если > 10, то бегаем по всем вкладкам.
-            На последней вкладке смотрим на строки,
-            кол-во которых остаток при делении на 10 общ числа строк.*/
     public void analyseTable(String column, String currentValue) {
 
+        assert currentValue != null;
+
+        //----Убеждаемся, что в результате поиска есть хотя бы одна строка-------------------------------------------
         countRecGrid.shouldBe(Condition.visible);
         int numberRows = Integer.parseInt(countRecGrid.getText());
-        Assertions.assertNotEquals(0, numberRows, "Грида пустая!");
+        assertNotEquals(0, numberRows, "Грида пустая!");
         int lastPageRows = numberRows % 10;
 
+        //----В результате поиска менее 10 строк---------------------------------------------------------------------
         if (numberRows <= 10) {
             for (int j = 1; j <= numberRows; j++) {
+                //----Подставляем название ячейки и номер, забираем значение и сравниваем с эталоном-----------------
                 String nameLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-" + column + "')])[" + j + "]")).getText();
-                assert currentValue != null;
                 assertTrue(nameLabel.contains(currentValue), column + " в гриде не совпадает с поиском!");
             }
-        } else {
+        }
+        //----Если в результате поска более 10 строк, то проверяем все вкладки, пока кнопка "След." активна----------
+        else {
             while (nextButton.isEnabled()) {
+                //----Проверяем все вкладки, кроме последней---------------------------------------------------------
                 for (int j = 1; j <= 10; j++) {
+                    //----Подставляем название ячейки и номер, забираем значение и сравниваем с эталоном-------------
                     String nameLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-" + column + "')])[" + j + "]")).getText();
-                    assert currentValue != null;
                     assertTrue(nameLabel.contains(currentValue), column + " в гриде не совпадает с поиском!");
                 }
                 nextButton.click();
             }
-
+                //----Проверяем последнюю вкладку--------------------------------------------------------------------
             for (int j = 1; j <= lastPageRows; j++) {
+                //----Подставляем название ячейки и номер, забираем значение и сравниваем с эталоном-----------------
                 String nameLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-" + column + "')])[" + j + "]")).getText();
-                assert currentValue != null;
                 assertTrue(nameLabel.contains(currentValue), column + " в гриде не совпадает с поиском!");
             }
         }
