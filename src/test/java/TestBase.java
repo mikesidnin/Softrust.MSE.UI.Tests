@@ -37,7 +37,7 @@ public class TestBase {
                     journalMseTitle = $(By.xpath("//div[text()=' Журнал направлений на медико-социальную экспертизу (МСЭ) ']")),
                     fioControl = $(byAttribute("formcontrolname","fio")),
                     fioControl2 = $(By.xpath("//input[contains(@class,'mat-input-element mat-form-field-autofill-control')]")),
-                    statusControl = $("#mat-input-1"),
+                    statusControl = $(By.xpath("//input[@placeholder='Статус']")),
                     resultControl = $(By.xpath("//input[@placeholder='Заключение']")),
                     countRecGrid = $(".count-rec"),
                     dateBeginControl = $(By.xpath("//input[@name='date_valid']")),
@@ -147,7 +147,7 @@ public class TestBase {
         if (mkabId == null || tapId == null || docPrvdId == null) {
             mkabId = "2662334";
             tapId = "2670620";
-            docPrvdId = "347";
+            docPrvdId = "2521";
         }
         //----Если настройка Jenkins пустая, то берем дефолтные значения + дебаг и тестирование-------------------------
         if (user == null || password == null) {

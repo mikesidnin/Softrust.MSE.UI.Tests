@@ -1,4 +1,3 @@
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import io.qameta.allure.Feature;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Owner("Mikhail Sidnin")
 @Feature("Журнал направлений на МСЭ.")
-class MseJournalTests extends TestBase {
+class MseJournalTests extends TestBase{
 
     @Test
     @Tag("web")
@@ -32,16 +31,13 @@ class MseJournalTests extends TestBase {
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String numberControl = fioControl2.getValue();
-            System.out.println(numberControl);
             assertTrue(numberControl.contains("470101"));
             assertTrue(numberControl.contains("202005"));
 
             String countRecValue = countRecGrid.getText();
-            System.out.println(countRecValue);
             assertTrue(countRecValue.contains("1"));
 
             String personNameText = gridFio.getText();
-            System.out.println(personNameText);
             assertTrue(personNameText.contains("Жмышенко"));
             assertTrue(personNameText.contains("Валерий"));
             assertTrue(personNameText.contains("Альбертович"));
@@ -56,8 +52,6 @@ class MseJournalTests extends TestBase {
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = fioControl2.getValue();
-            System.out.println(valueNew);
-
             assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
@@ -80,7 +74,6 @@ class MseJournalTests extends TestBase {
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String currentFio = fioControl2.getValue();
-
             analyseTable("fio", currentFio);
         });
 
@@ -93,8 +86,6 @@ class MseJournalTests extends TestBase {
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = fioControl2.getValue();
-            System.out.println(valueNew);
-
             assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
@@ -121,9 +112,6 @@ class MseJournalTests extends TestBase {
             Date dateControl = new SimpleDateFormat("dd.MM.yyyy").parse(valueDateControl);
             Date dateGrid = new SimpleDateFormat("dd.MM.yyyy").parse(valueDateGrid);
 
-            System.out.println(dateControl.getTime());
-            System.out.println(dateGrid.getTime());
-
             assertTrue(dateControl.getTime() <= dateGrid.getTime());
         });
 
@@ -136,8 +124,6 @@ class MseJournalTests extends TestBase {
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = dateBeginControl.getValue();
-            System.out.println(valueNew);
-
             assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
@@ -181,8 +167,6 @@ class MseJournalTests extends TestBase {
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = dateEndControl.getValue();
-            System.out.println(valueNew);
-
             assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
@@ -202,12 +186,12 @@ class MseJournalTests extends TestBase {
                 statusControl.click();
                 statusControlValues[i].click();
                 findButton.click();
+
                 assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
                 String currentStatus = statusControl.getValue();
-                System.out.println(currentStatus);
-
                 analyseTable("status", currentStatus);
+
                 eraiseButton.click();
             }
             statusControl.click();
@@ -223,8 +207,6 @@ class MseJournalTests extends TestBase {
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = statusControl.getValue();
-            System.out.println(valueNew);
-
             assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
@@ -246,8 +228,6 @@ class MseJournalTests extends TestBase {
                 assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
                 String currentConclusion = resultControl.getValue();
-                System.out.println(currentConclusion);
-
                 analyseTable("conclusion", currentConclusion);
                 eraiseButton.click();
             }
@@ -264,8 +244,6 @@ class MseJournalTests extends TestBase {
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = resultControl.getValue();
-            System.out.println(valueNew);
-
             assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
@@ -299,22 +277,17 @@ class MseJournalTests extends TestBase {
 
             String currentAuthor = authorControl.getValue();
             String cutAuthor = currentAuthor.substring(currentAuthor.indexOf("-") + 2, currentAuthor.indexOf("(") - 1);
-            System.out.println(cutAuthor);
-
             analyseTable("author", cutAuthor);
         });
 
         step("Очистка поля фильтрации автор.", () -> {
 
             String valueOld = authorControl.getValue();
-            System.out.println(valueOld);
 
             eraiseButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = authorControl.getValue();
-            System.out.println(valueNew);
-
             assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
 
@@ -353,14 +326,11 @@ class MseJournalTests extends TestBase {
         step("Очистка поля фильтрации член комиссии.", () -> {
 
             String valueOld = memberControl.getValue();
-            System.out.println(valueOld);
 
             eraiseButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = memberControl.getValue();
-            System.out.println(valueNew);
-
             assertNotSame(valueNew, valueOld, "Ошибка при очистке полей фильтрации");
         });
     }
