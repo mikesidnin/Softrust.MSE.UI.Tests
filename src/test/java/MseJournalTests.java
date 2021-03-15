@@ -18,6 +18,7 @@ import static testHelpers.AnalyseTable.*;
 
 @Owner("Mikhail Sidnin")
 @Feature("Журнал направлений на МСЭ.")
+@DisplayName("Журнал направлений на МСЭ.")
 class MseJournalTests extends TestBase{
 
     @Test

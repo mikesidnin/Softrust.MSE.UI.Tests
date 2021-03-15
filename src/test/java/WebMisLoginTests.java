@@ -16,7 +16,8 @@ import static testHelpers.GetWebMisUrl.*;
 
 @Owner("Mikhail Sidnin")
 @Feature("Журнал направлений на МСЭ.")
-class WebMisLoginTest extends TestBase {
+@DisplayName("Логин и переход в журнал МСЭ.")
+class WebMisLoginTests extends TestBase {
 
     @Test
     @Tag("web")
