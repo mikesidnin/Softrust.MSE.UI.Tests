@@ -12,6 +12,9 @@ import java.util.Random;
 import static io.qameta.allure.Allure.step;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static pageObjects.JournalMsePage.*;
+import static testHelpers.AnalyseTable.*;
+
 
 @Owner("Mikhail Sidnin")
 @Feature("Журнал направлений на МСЭ.")
@@ -46,9 +49,8 @@ class MseJournalTests extends TestBase{
         step("Очистка поля фильтрации ФИО.", () -> {
 
             String valueOld = fioControl2.getValue();
-            System.out.println(valueOld);
 
-            eraiseButton.click();
+            eraseButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = fioControl2.getValue();
@@ -80,9 +82,8 @@ class MseJournalTests extends TestBase{
         step("Очистка поля фильтрации ФИО.", () -> {
 
             String valueOld = fioControl2.getValue();
-            System.out.println(valueOld);
 
-            eraiseButton.click();
+            eraseButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = fioControl2.getValue();
@@ -118,9 +119,8 @@ class MseJournalTests extends TestBase{
         step("Очистка поля фильтрации Дата с.", () -> {
 
             String valueOld = dateBeginControl.getValue();
-            System.out.println(valueOld);
 
-            eraiseButton.click();
+            eraseButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = dateBeginControl.getValue();
@@ -152,18 +152,14 @@ class MseJournalTests extends TestBase{
             Date dateControl = new SimpleDateFormat("dd.MM.yyyy").parse(valueDateControl);
             Date dateGrid = new SimpleDateFormat("dd.MM.yyyy").parse(valueDateGrid);
 
-            System.out.println(dateControl.getTime());
-            System.out.println(dateGrid.getTime());
-
             assertTrue(dateControl.getTime() >= dateGrid.getTime());
         });
 
         step("Очистка поля фильтрации Дата по.", () -> {
 
             String valueOld = dateEndControl.getValue();
-            System.out.println(valueOld);
 
-            eraiseButton.click();
+            eraseButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = dateEndControl.getValue();
@@ -192,7 +188,7 @@ class MseJournalTests extends TestBase{
                 String currentStatus = statusControl.getValue();
                 analyseTable("status", currentStatus);
 
-                eraiseButton.click();
+                eraseButton.click();
             }
             statusControl.click();
             statusControlValues[1].click();
@@ -201,9 +197,8 @@ class MseJournalTests extends TestBase{
         step("Очистка поля фильтрации статус.", () -> {
 
             String valueOld = statusControl.getValue();
-            System.out.println(valueOld);
 
-            eraiseButton.click();
+            eraseButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = statusControl.getValue();
@@ -229,7 +224,7 @@ class MseJournalTests extends TestBase{
 
                 String currentConclusion = resultControl.getValue();
                 analyseTable("conclusion", currentConclusion);
-                eraiseButton.click();
+                eraseButton.click();
             }
             resultControl.click();
             resultControlValues[1].click();
@@ -238,9 +233,8 @@ class MseJournalTests extends TestBase{
         step("Очистка поля фильтрации заключение.", () -> {
 
             String valueOld = resultControl.getValue();
-            System.out.println(valueOld);
 
-            eraiseButton.click();
+            eraseButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = resultControl.getValue();
@@ -263,7 +257,7 @@ class MseJournalTests extends TestBase{
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             int rowsStatus = Integer.parseInt(countRecGrid.getText());
-            eraiseButton.click();
+            eraseButton.click();
 
             statusControl.click();
             statusControlValues[0].click();
@@ -284,7 +278,7 @@ class MseJournalTests extends TestBase{
 
             String valueOld = authorControl.getValue();
 
-            eraiseButton.click();
+            eraseButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = authorControl.getValue();
@@ -306,9 +300,9 @@ class MseJournalTests extends TestBase{
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             int rowsStatus = Integer.parseInt(countRecGrid.getText());
-            eraiseButton.click();
+            eraseButton.click();
 
-            memberControl.click();;
+            memberControl.click();
             memberFirstValue.click();
             findButton.click();
 
@@ -327,7 +321,7 @@ class MseJournalTests extends TestBase{
 
             String valueOld = memberControl.getValue();
 
-            eraiseButton.click();
+            eraseButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
             String valueNew = memberControl.getValue();

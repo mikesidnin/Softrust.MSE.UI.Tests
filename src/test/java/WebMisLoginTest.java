@@ -9,6 +9,9 @@ import static com.codeborne.selenide.Condition.*;
 import static helpers.Environment.*;
 import static io.qameta.allure.Allure.step;
 import static com.codeborne.selenide.Selenide.*;
+import static pageObjects.JournalMsePage.*;
+import static pageObjects.WebMisPage.*;
+import static testHelpers.GetWebMisUrl.*;
 
 
 @Owner("Mikhail Sidnin")

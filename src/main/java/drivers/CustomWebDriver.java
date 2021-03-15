@@ -22,8 +22,6 @@ public class CustomWebDriver implements WebDriverProvider {
     public WebDriver createDriver(DesiredCapabilities capabilities) {
         capabilities.setBrowserName(CHROME);
         capabilities.setCapability("enableVNC", true);
-//        capabilities.setCapability("enableVideo", true);
-//        capabilities.setCapability("videoFrameRate", 24);
         capabilities.setCapability(ChromeOptions.CAPABILITY, buildChromeOptions());
         WebDriverManager.chromedriver().setup();
 
@@ -35,7 +33,6 @@ public class CustomWebDriver implements WebDriverProvider {
     }
 
     private ChromeOptions buildChromeOptions() {
-//        System.setProperty("webdriver.chrome.driver","/usr/bin/chromedriver");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--disable-notifications");

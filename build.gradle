@@ -40,6 +40,8 @@ allure {
 
 dependencies {
     implementation 'junit:junit:4.12'
+    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation 'org.jetbrains:annotations:20.1.0'
     compile("com.codeborne:selenide:5.13.1")
     compile("org.aeonbits.owner:owner:1.0.12")
     compile("org.json:json:20200518")

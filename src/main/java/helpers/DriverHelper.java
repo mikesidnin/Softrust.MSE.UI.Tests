@@ -13,7 +13,7 @@ public class DriverHelper {
 
     public static void configureSelenide() {
         Configuration.browser = CustomWebDriver.class.getName();
-        Configuration.timeout = 20000;
+        Configuration.timeout = 10000;
     }
 
     public static String getSessionId(){
