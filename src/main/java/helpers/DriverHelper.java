@@ -5,6 +5,7 @@ import com.codeborne.selenide.Selenide;
 import drivers.CustomWebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import static com.codeborne.selenide.FileDownloadMode.PROXY;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static org.openqa.selenium.logging.LogType.BROWSER;
 
@@ -14,6 +15,8 @@ public class DriverHelper {
     public static void configureSelenide() {
         Configuration.browser = CustomWebDriver.class.getName();
         Configuration.timeout = 10000;
+        Configuration.proxyEnabled = true;
+        Configuration.fileDownload = PROXY;
     }
 
     public static String getSessionId(){

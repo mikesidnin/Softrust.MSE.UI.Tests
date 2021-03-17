@@ -18,6 +18,7 @@ import static helpers.Environment.remoteDriverUrl;
 
 
 public class CustomWebDriver implements WebDriverProvider {
+
     @Override
     public WebDriver createDriver(DesiredCapabilities capabilities) {
         capabilities.setBrowserName(CHROME);

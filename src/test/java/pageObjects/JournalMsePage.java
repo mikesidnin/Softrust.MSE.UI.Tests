@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class JournalMsePage {
 
-    public static SelenideElement snackbar = $(By.xpath(".//simple-snack-bar[@class='mat-simple-snackbar ng-star-inserted']/span")),
+    public static SelenideElement snackbar = $(By.xpath("//simple-snack-bar[@class='mat-simple-snackbar ng-star-inserted']//span[1]")),
                     journalMseTitle = $(By.xpath("//div[text()=' Журнал направлений на медико-социальную экспертизу (МСЭ) ']")),
                     fioControl = $(byAttribute("formcontrolname","fio")),
                     fioControl2 = $(By.xpath("//input[contains(@class,'mat-input-element mat-form-field-autofill-control')]")),
@@ -28,7 +28,8 @@ public class JournalMsePage {
 
     public static SelenideElement gridSortByDateButton = $(By.xpath("//button[@class='mat-sort-header-button']")),
                     findButton = $(By.xpath("//span[text()='Найти']")),
-                    nextButton = $(By.xpath("(//div[@class='page-element']//button)[3]"));
+                    nextButton = $(By.xpath("(//div[@class='page-element']//button)[3]")),
+                    excelButton = $(By.xpath("//button[text()=' Сохранить Excel ']"));
 
     //----Массив локаторов статусов направлений-----------------------------------------------------------------------
     //----Сделано в качестве тренеровки и эксперимента. Способ рабочий------------------------------------------------
