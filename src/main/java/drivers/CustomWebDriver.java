@@ -27,9 +27,9 @@ public class CustomWebDriver implements WebDriverProvider {
         WebDriverManager.chromedriver().setup();
 
         if(isRemoteDriver) {
-            return getRemoteWebDriver(capabilities);
-        } else {
-            return getLocalChromeDriver(capabilities);
+                return getRemoteWebDriver(capabilities);
+            } else {
+                return getLocalChromeDriver(capabilities);
         }
     }
 
