@@ -276,6 +276,7 @@ class MseJournalTests extends TestBase{
 
             String currentAuthor = authorControl.getValue();
             String cutAuthor = currentAuthor.substring(currentAuthor.indexOf("-") + 2, currentAuthor.indexOf("(") - 1);
+
             analyseTable("author", cutAuthor);
         });
 
