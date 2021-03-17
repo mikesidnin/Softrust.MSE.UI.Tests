@@ -1,4 +1,3 @@
-import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import io.qameta.allure.Feature;
@@ -13,8 +12,6 @@ import java.util.Random;
 
 import static io.qameta.allure.Allure.step;
 import static com.codeborne.selenide.Selenide.*;
-import static org.apache.commons.io.FileUtils.contentEquals;
-import static org.apache.commons.io.FileUtils.deleteDirectory;
 import static org.junit.jupiter.api.Assertions.*;
 import static pageObjects.JournalMsePage.*;
 import static testHelpers.AnalyseTable.*;
