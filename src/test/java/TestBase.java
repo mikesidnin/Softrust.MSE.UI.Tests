@@ -47,7 +47,7 @@ public class TestBase {
         }
 
         if (urlRandomDirectionMse == null) {
-            urlMse = openURLDirectionMse(mkabId, tapId, directionId, docPrvdId);
+            urlRandomDirectionMse = openURLDirectionMse(mkabId, tapId, directionId, docPrvdId);
         }
     }
 
