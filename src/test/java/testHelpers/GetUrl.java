@@ -1,6 +1,8 @@
 package testHelpers;
 
-public class GetMseUrl {
+import static com.codeborne.selenide.Selenide.open;
+
+public class GetUrl {
 
     public static String openURLMseJournal(String docPrvdId) {
         String ipAddress = "http://109.95.224.42:2165/",
@@ -11,5 +13,13 @@ public class GetMseUrl {
                 returnUrl = "ReturnUrl=http:%2F%2F192.168.7.54%2Fmis%2Ftest2%2FMain%2FDefault";
 
         return ipAddress + relativePath + "?" + ticket+ "&" + docPrvdIdPart + "&" + misUrl + "&" + returnUrl;
+    }
+
+    public static void openURLWebMis() {
+
+        String ipAddress = "http://192.168.7.54/",
+                relativePath = "mis/test2/";
+
+        open(ipAddress + relativePath);
     }
 }

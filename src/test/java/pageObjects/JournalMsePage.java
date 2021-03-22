@@ -28,8 +28,10 @@ public class JournalMsePage {
 
     public static SelenideElement gridSortByDateButton = $(By.xpath("//button[@class='mat-sort-header-button']")),
                     findButton = $(By.xpath("//span[text()='Найти']")),
-                    nextButton = $(By.xpath("(//div[@class='page-element']//button)[3]")),
-                    excelButton = $(By.xpath("//button[text()=' Сохранить Excel ']"));
+                    nextPageButton = $(By.xpath("(//div[@class='page-element']//button)[3]")),
+                    excelButton = $(By.xpath("//button[text()=' Сохранить Excel ']")),
+                    currentLastPageButton = $(By.xpath("(//div[contains(@class,'pages page-element')]//button)[3]")),
+                    firstPageButton = $(By.xpath("//button[contains(@class,'pager-btn mat-button')]//span"));
 
     //----Массив локаторов статусов направлений-----------------------------------------------------------------------
     //----Сделано в качестве тренеровки и эксперимента. Способ рабочий------------------------------------------------

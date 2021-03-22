@@ -1,5 +1,4 @@
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import io.qameta.allure.Step;
 import io.qameta.allure.selenide.AllureSelenide;
@@ -11,13 +10,12 @@ import static com.codeborne.selenide.Selenide.*;
 import static helpers.AttachmentsHelper.*;
 import static helpers.DriverHelper.*;
 import static helpers.Environment.*;
-import static testHelpers.GetMseUrl.*;
+import static testHelpers.GetUrl.*;
 
 public class TestBase {
 
     static String urlMse;
-
-    SelenideElement body = $("body");
+    static String randomPersonFio;
 
     @BeforeAll
     @Step("Tests setup")

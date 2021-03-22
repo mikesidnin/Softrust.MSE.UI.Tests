@@ -7,7 +7,8 @@ import static com.codeborne.selenide.Selenide.$;
 
 public class WebMisPage {
 
-    public static SelenideElement loginControl = $("#Login"),
+    public static SelenideElement body = $("body"),
+            loginControl = $("#Login"),
             welcomeTitle = $(".main-title"),
             passwordControl = $("#Password"),
             signInButton = $(By.xpath("//input[contains(@class,'login-button linput')]")),

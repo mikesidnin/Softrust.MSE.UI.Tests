@@ -11,7 +11,7 @@ import static io.qameta.allure.Allure.step;
 import static com.codeborne.selenide.Selenide.*;
 import static pageObjects.JournalMsePage.*;
 import static pageObjects.WebMisPage.*;
-import static testHelpers.GetWebMisUrl.*;
+import static testHelpers.GetUrl.openURLWebMis;
 
 
 @Owner("Mikhail Sidnin")

@@ -7,7 +7,7 @@ import static com.codeborne.selenide.Selenide.$;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static pageObjects.JournalMsePage.*;
-import static pageObjects.JournalMsePage.nextButton;
+import static pageObjects.JournalMsePage.nextPageButton;
 
 public class AnalyseTable {
 
@@ -31,14 +31,14 @@ public class AnalyseTable {
         }
         //----Если в результате поска более 10 строк, то проверяем все вкладки, пока кнопка "След." активна----------
         else {
-            while (nextButton.isEnabled()) {
+            while (nextPageButton.isEnabled()) {
                 //----Проверяем все вкладки, кроме последней---------------------------------------------------------
                 for (int j = 1; j <= matValue; j++) {
                     //----Подставляем название ячейки и номер, забираем значение и сравниваем с эталоном-------------
                     String nameLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-" + column + "')])[" + j + "]")).getText();
                     assertTrue(nameLabel.contains(currentValue), column + " в гриде не совпадает с поиском!");
                 }
-                nextButton.click();
+                nextPageButton.click();
             }
             //----Проверяем последнюю вкладку--------------------------------------------------------------------
             for (int j = 1; j <= lastPageRows; j++) {
@@ -48,4 +48,22 @@ public class AnalyseTable {
             }
         }
     }
+
+    public static boolean isOnTable(String column, String interestedValue) {
+
+        countRecGrid.shouldBe(Condition.visible);
+        int numberRows = Integer.parseInt(countRecGrid.getText());
+        assertNotEquals(0, numberRows, "Грида пустая!");
+
+        int matValue = Integer.parseInt(matSelectValue.getText());
+        boolean result = false;
+
+        for (int i = 1; i <= matValue; i++) {
+            String nameLabel = $(By.xpath("(//td[contains(@class,'mat-cell cdk-column-" + column + "')])[" + i + "]")).getText();
+            result = nameLabel.contains(interestedValue);
+        }
+        return result;
+    }
+
+
 }
