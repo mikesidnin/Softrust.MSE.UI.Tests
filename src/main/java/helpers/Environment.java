@@ -11,6 +11,7 @@ public class Environment {
             mkabId = System.getProperty("mkaId"),
             tapId = System.getProperty("tapId"),
             docPrvdId = System.getProperty("docprvdId"),
+            directionId = System.getProperty("directionId"),
             user = System.getProperty("user"),
             password = System.getProperty("password"),
             baseUrlProperty = System.getProperty("baseUrlProperty");

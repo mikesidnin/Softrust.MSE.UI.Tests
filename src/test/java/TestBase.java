@@ -15,6 +15,7 @@ import static testHelpers.GetUrl.*;
 public class TestBase {
 
     static String urlMse;
+    static String urlRandomDirectionMse;
     static String randomPersonFio;
 
     @BeforeAll
@@ -29,10 +30,11 @@ public class TestBase {
         Configuration.startMaximized = true;
 
         //----Если настройка Jenkins пустая, то берем дефолтные значения + дебаг и тестирование-------------------------
-        if (mkabId == null || tapId == null || docPrvdId == null) {
+        if (mkabId == null || tapId == null || docPrvdId == null || directionId == null) {
             mkabId = "2662334";
-            tapId = "2670620";
+            tapId = "2670151";
             docPrvdId = "2521";
+            directionId = "419";
         }
 
         if (user == null || password == null) {
@@ -42,6 +44,10 @@ public class TestBase {
 
         if (urlMse == null) {
             urlMse = openURLMseJournal(docPrvdId);
+        }
+
+        if (urlRandomDirectionMse == null) {
+            urlMse = openURLDirectionMse(mkabId, tapId, directionId, docPrvdId);
         }
     }
 

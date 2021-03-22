@@ -1,3 +1,4 @@
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
@@ -69,6 +70,10 @@ class DirectionMseTests extends TestBase {
 
             String personFioHeader = $(By.xpath("//span[@class='ng-tns-c1-0']")).getText();
             assertTrue(personFioHeader.equalsIgnoreCase(randomPersonFio), "ФИО пациента в журнале не совпадает с ФИО в направлении.");
+
+            urlRandomDirectionMse = WebDriverRunner.url();
         });
+
+
     }
 }
