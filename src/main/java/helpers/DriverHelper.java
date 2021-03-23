@@ -20,7 +20,7 @@ public class DriverHelper {
         Configuration.browser = CustomWebDriver.class.getName();
         Configuration.timeout = 10000;
         Configuration.proxyEnabled = true;
-        Configuration.fileDownload = proxyEnabled ? PROXY : HTTPGET;
+        Configuration.fileDownload = PROXY;
     }
 
     public static String getSessionId(){
