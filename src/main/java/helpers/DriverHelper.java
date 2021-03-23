@@ -22,7 +22,7 @@ public class DriverHelper {
         Configuration.proxyEnabled = true;
 //        Configuration.proxyHost = "192.168.7.152";//"localhost";
 //        Configuration.proxyPort = 8887;
-        Configuration.fileDownload = PROXY;
+        Configuration.fileDownload = HTTPGET;
     }
 
     public static String getSessionId(){
