@@ -340,7 +340,6 @@ class MseJournalTests extends TestBase{
     void journalMseExcelDownload() {
 
         step("Скачивание Excel файла.", () -> {
-
             open(urlMse);
             File excelReport = excelButton.download(5000);
             assertTrue(excelReport.exists(), "Файл не найден.");
