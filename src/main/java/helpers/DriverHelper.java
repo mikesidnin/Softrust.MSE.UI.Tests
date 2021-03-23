@@ -18,7 +18,8 @@ public class DriverHelper {
         Configuration.browser = CustomWebDriver.class.getName();
         Configuration.timeout = 10000;
         Configuration.proxyEnabled = true;
-        Configuration.proxyHost = "http://127.0.0.1:4444/wd/hub/";
+        Configuration.proxyHost = "10.0.0.100";
+        Configuration.proxyPort = 8800;
         Configuration.fileDownload = PROXY;
     }
 
