@@ -21,7 +21,7 @@ public class DriverHelper {
         Configuration.timeout = 10000;
         Configuration.proxyEnabled = true;
         Configuration.proxyHost = "192.168.7.152";
-        Configuration.proxyPort = 8888;
+        Configuration.proxyPort = 8887;
         Configuration.fileDownload = PROXY;
     }
 
