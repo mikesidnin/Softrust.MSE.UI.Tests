@@ -20,6 +20,8 @@ public class DriverHelper {
         Configuration.browser = CustomWebDriver.class.getName();
         Configuration.timeout = 10000;
         Configuration.proxyEnabled = true;
+        Configuration.proxyHost = "192.168.7.152";
+        Configuration.proxyPort = 8888;
         Configuration.fileDownload = PROXY;
     }
 
