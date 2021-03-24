@@ -47,17 +47,16 @@ class DirectionMseTests extends TestBase {
             int randomLine;
             int randomPage = new Random().nextInt(maxPage) + 1;
 
-            if (randomPage == maxPage){
+            if (randomPage == maxPage) {
                 randomLine = new Random().nextInt(lastPageRows) + 1;
-            }
-            else {
+            } else {
                 randomLine = new Random().nextInt(matValue) + 1;
             }
 
             firstPageButton.click();
 
             if (randomPage != 1) {
-                for (int i = 1; i <= randomPage - 1; i++){
+                for (int i = 1; i <= randomPage - 1; i++) {
                     nextPageButton.click();
                     sleep(1000);
                 }
@@ -73,7 +72,27 @@ class DirectionMseTests extends TestBase {
 
             urlRandomDirectionMse = WebDriverRunner.url();
         });
-
-
     }
+
+        @Test
+        @Tag("web")
+        @DisplayName("Открытие направления на МСЭ из журнала МСЭ.")
+        void protocolVkTests() {
+
+            step("Фильтруем направления по статусу Сформирован.", () -> {
+
+                open(urlMse);
+
+                statusControl.click();
+                statusControlValues[0].click();
+                findButton.click();
+
+                String interestedValue = statusControl.getValue();
+                analyseTable("status", interestedValue);
+            });
+
+
+        }
+
+
 }
