@@ -17,7 +17,7 @@ public class GetUrl {
 
     public static String openURLDirectionMse(String mkabId, String tapId, String directionId, String docPrvdId) {
 
-        String ipAddress = "http://109.95.224.42:2165/",
+         String ipAddress = "http://109.95.224.42:2165/",
                 relativePath = "test2/mse/examination/edit/",
                 mkabIdPart = mkabId,
                 tapIdPart = tapId,
