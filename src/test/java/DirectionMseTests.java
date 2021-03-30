@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static pageObjects.JournalMsePage.*;
 import static pageObjects.DirectionMsePage.*;
 import static testHelpers.AnalyseTable.*;
+import static testHelpers.GetUrl.openURLRandomDirection;
 
 @Owner("Mikhail Sidnin")
 @Feature("Направление на МСЭ.")
@@ -57,7 +58,12 @@ class DirectionMseTests extends TestBase {
 
             step("Фильтруем направления по статусу Сформирован.", () -> {
 
-                open(urlRandomDirectionMse);
+                if (urlRandomDirectionMse.contains("ticket")){
+                    open(urlRandomDirectionMse);
+                }
+                else{
+                    open(openURLRandomDirection(urlRandomDirectionMse));
+                }
 
 
             });
