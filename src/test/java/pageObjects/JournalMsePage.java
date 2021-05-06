@@ -5,11 +5,12 @@ import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selenide.$;
+import static org.openqa.selenium.By.className;
 
 public class JournalMsePage {
 
-    public static SelenideElement snackbar = $(By.xpath("//simple-snack-bar[@class='mat-simple-snackbar ng-star-inserted']//span[1]")),
-                    journalMseTitle = $(By.xpath("//div[text()=' Журнал направлений на медико-социальную экспертизу (МСЭ) ']")),
+    public static SelenideElement snackbar = $(By.xpath("/simple-snack-bar[@class='mat-simple-snackbar ng-star-inserted']//span[1]")),
+                    journalMseTitle = $(className("title-container")),
                     fioControl = $(byAttribute("formcontrolname","fio")),
                     fioControl2 = $(By.xpath("//input[contains(@class,'mat-input-element mat-form-field-autofill-control')]")),
                     statusControl = $(By.xpath("//input[@placeholder='Статус']")),

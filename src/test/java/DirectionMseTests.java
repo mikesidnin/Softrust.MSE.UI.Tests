@@ -1,10 +1,10 @@
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
-import pageObjects.DirectionMsePage;
 
 import static com.codeborne.selenide.Selenide.*;
 import static io.qameta.allure.Allure.step;
@@ -30,7 +30,11 @@ class DirectionMseTests extends TestBase {
             open(urlMse);
             sleep(1000);
 
+            if (!statusControl.isEnabled()){ sleep(3000);}
+
             statusControl.click();
+            statusControlValues[0].shouldBe(Condition.visible);
+            statusControlValues[1].should(Condition.exist);
             statusControlValues[0].click();
             findButton.click();
 

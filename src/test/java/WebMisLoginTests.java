@@ -27,6 +27,8 @@ class WebMisLoginTests extends TestBase {
         step("Логин в ВебМИС.", () -> {
 
             openURLWebMis();
+            sleep(1000);
+
 
             welcomeTitle.shouldHave(text("Вход в систему"));
             welcomeTitle.shouldBe(visible);
@@ -66,6 +68,7 @@ class WebMisLoginTests extends TestBase {
 
             body.shouldHave(text("Журнал направлений на медико-социальную экспертизу (МСЭ)"));
             journalMseTitle.shouldBe(visible);
+
 
             urlMse = WebDriverRunner.url();
         });

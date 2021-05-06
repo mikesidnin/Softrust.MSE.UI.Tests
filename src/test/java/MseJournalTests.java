@@ -1,13 +1,10 @@
-import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Owner;
 import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Proxy;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -32,6 +29,8 @@ class MseJournalTests extends TestBase{
         step("Поиск по номеру направления.", () -> {
 
             open(urlMse);
+            sleep(1000);
+            if (!statusControl.isEnabled()){ sleep(3000);}
 
             fioControl.setValue("470101-202005");
             findButton.click();
@@ -69,6 +68,7 @@ class MseJournalTests extends TestBase{
         step("Поиск по ФИО направления.", () -> {
 
             open(urlMse);
+            if (!statusControl.isEnabled()){ sleep(3000);}
 
             findButton.click();
 
@@ -102,6 +102,7 @@ class MseJournalTests extends TestBase{
         step("Поиск по дате подачи с.", () -> {
 
             open(urlMse);
+            if (!statusControl.isEnabled()){ sleep(3000);}
 
             dateBeginControl.setValue("01.02.2021");
             findButton.click();
@@ -140,6 +141,7 @@ class MseJournalTests extends TestBase{
         step("Поиск по дате подачи по.", () -> {
 
             open(urlMse);
+            if (!statusControl.isEnabled()){ sleep(3000);}
 
             dateEndControl.setValue("19.02.2021");
             findButton.click();
@@ -179,6 +181,7 @@ class MseJournalTests extends TestBase{
         step("Поиск по статусу направления", () -> {
 
             open(urlMse);
+            if (!statusControl.isEnabled()){ sleep(3000);}
             statusControl.click();
 
             for (int i = 0; i < statusControlValues.length; i++) {
@@ -218,6 +221,7 @@ class MseJournalTests extends TestBase{
         step("Поиск по заключению направления", () -> {
 
             open(urlMse);
+            if (!statusControl.isEnabled()){ sleep(3000);}
 
             for (int i = 0; i < resultControlValues.length; i++) {
 
@@ -254,6 +258,7 @@ class MseJournalTests extends TestBase{
         step("Поиск по автору и статусу направления на МСЭ.", () -> {
 
             open(urlMse);
+            if (!statusControl.isEnabled()){ sleep(3000);}
 
             statusControl.click();
             statusControlValues[0].click();
@@ -300,6 +305,7 @@ class MseJournalTests extends TestBase{
         step("Поиск по члену комиссии.", () -> {
 
             open(urlMse);
+            if (!statusControl.isEnabled()){ sleep(3000);}
 
             findButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");

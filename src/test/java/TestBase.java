@@ -29,8 +29,6 @@ public class TestBase {
     public void BeforeEachTest() {
         Configuration.startMaximized = true;
 
-        //sleep(60000);
-
         //----Если настройка Jenkins пустая, то берем дефолтные значения + дебаг и тестирование-------------------------
         if (mkabId == null || tapId == null || docPrvdId == null || directionId == null) {
             mkabId = "2662334";
