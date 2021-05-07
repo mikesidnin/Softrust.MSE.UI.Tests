@@ -26,29 +26,20 @@ public class TestBase {
     }
 
     @BeforeEach
-    public void BeforeEachTest() {
+    public void beforeEachTest() {
         Configuration.startMaximized = true;
 
         //----Если настройка Jenkins пустая, то берем дефолтные значения + дебаг и тестирование-------------------------
-        if (mkabId == null || tapId == null || docPrvdId == null || directionId == null) {
-            mkabId = "2662334";
-            tapId = "2670151";
-            docPrvdId = "2521";
-            directionId = "419";
-        }
+        mkabId = (mkabId == null) ? "2662334" : mkabId;
+        tapId = (tapId == null) ? "2670151" : tapId;
+        docPrvdId = (docPrvdId == null) ? "2521" : docPrvdId;
+        directionId = (directionId == null) ? "419" : directionId;
 
-        if (user == null || password == null) {
-            user = "sidnin_doc"; //admin
-            password = "11";
-        }
+        user = (user == null) ? "sidnin_doc" : user;
+        password = (password == null) ? "11" : password;
 
-        if (urlMse == null) {
-            urlMse = openURLMseJournal(docPrvdId);
-        }
-
-        if (urlRandomDirectionMse == null) {
-            urlRandomDirectionMse = openURLDirectionMse(mkabId, tapId, directionId, docPrvdId);
-        }
+        urlMse = (urlMse == null) ? openURLMseJournal(docPrvdId) : urlMse;
+        urlRandomDirectionMse = (urlRandomDirectionMse == null) ? openURLDirectionMse(mkabId, tapId, directionId, docPrvdId) : urlRandomDirectionMse;
     }
 
     @AfterEach

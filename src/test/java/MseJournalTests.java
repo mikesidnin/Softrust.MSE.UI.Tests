@@ -12,6 +12,7 @@ import java.util.Random;
 import static io.qameta.allure.Allure.step;
 import static com.codeborne.selenide.Selenide.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static pageObjects.DirectionMsePage.*;
 import static pageObjects.JournalMsePage.*;
 import static testHelpers.AnalyseTable.*;
 
@@ -32,21 +33,30 @@ class MseJournalTests extends TestBase{
             sleep(1000);
             if (!statusControl.isEnabled()){ sleep(3000);}
 
-            fioControl.setValue("470101-202005");
+            randomPersonFio = getRandomLineTextAndDoubleClick("fio");
+            assertFalse(snackbar.exists(), "Неизвестная ошибка.");
+
+            String personFioHeader = headerPatientFio.getText();
+            assertTrue(personFioHeader.equalsIgnoreCase(randomPersonFio), "ФИО пациента в журнале не совпадает с ФИО в направлении.");
+
+            String randomNumber = numberMse.getValue();
+            closeDirectionButton.click();
+
+            fioControl.setValue(randomNumber);
             findButton.click();
             assertFalse(snackbar.exists(), "Неизвестная ошибка.");
 
+
             String numberControl = fioControl2.getValue();
-            assertTrue(numberControl.contains("470101"));
-            assertTrue(numberControl.contains("202005"));
+            assert numberControl != null;
+            assert randomNumber != null;
+            assertTrue(numberControl.contains(randomNumber));
 
             String countRecValue = countRecGrid.getText();
             assertTrue(countRecValue.contains("1"));
 
             String personNameText = gridFio.getText();
-            assertTrue(personNameText.contains("Жмышенко"));
-            assertTrue(personNameText.contains("Валерий"));
-            assertTrue(personNameText.contains("Альбертович"));
+            assertTrue(personNameText.contains(randomPersonFio));
         });
 
         step("Очистка поля фильтрации ФИО.", () -> {
